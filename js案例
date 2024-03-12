@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style></style>
+        <script>
+            //js的注释
+            //1.单行注释   Ctrl+/
+            /* 2.多行注释  Shift + Alt + a
+              2.多行注释  vscode中是 Shift + alt + /
+            */
+             <!-- 2.内嵌式的js -->
+            // alert('注意：内嵌式，首页触发')
+        </script>
+        <!-- 3.外部引入的js -->
+        
+        <script src="./my.js"></script>
+    </head>
+    <body>
+        <!--1. 行内式的js直接写入元素的内部 -->
+        <input type="button" value="按我触发" onclick="alert('注意：内部元素，没错，你触发了')"/>
+    </body>
+</html>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//js解释性语言【JavaScript引擎】，一边解释一边运行，Java，c等是编译型语言【相对应的编译器】，先编译成一个文件在去执行
+//同一变量下后面的值会覆盖前一值，层叠式更新变量
+//可声明多个变量利用逗号隔开，且变量类型无需说明，区分大小写【字母，数字，下划线，美元符号$】
+//变量只定义不声明，即为undefind。变量只不定义不声明，报错。变量只不定义声明，可行但不建议使用。
+//变量类型通过右边的值去赋予，数据类型可变化（重新赋予时）
+//规范：标识符命名【有意义】  变量一般用名词  函数一般动词  操作符  左右各保留一个空格  
+
+
+
+
+//prompt这是一个输入框,同时进行赋值，获取的是字符型
+var n=prompt('请输入你的年龄');
+var str ='你的实际年龄'+ n +'岁'
+//alert弹出提示框
+alert('这是外部引用，并且你的年龄已经录入'+n);
+//console控制台打印
+console.log(str);
+console.log('这是程序员能看的');
+//声明一个变量
+var age,sex,age2;
+//赋值，将这个值存入变量中
+age=18;
+//变量的初始化
+age2=18;
+console.log(age)
+console.log(age2)
+
+
+//科学技术法的最大值最小值无穷大无穷小非数字
+console.log(Number.MAX_VALUE)
+console.log(Number.MIN_VALUE)
+console.log(Infinity)
+console.log(-Infinity)
+console.log(NaN)
+//isNaN()用于判断是否为数字,返回值是布尔值
+//字符串型满足  外双内单  或是  内单外双  引号中转移字符串 \n
+//字符串计算长度和拼接  .length  +字符串和其他拼接会变为字符型
+
+//布尔型用于运算时    true当1计算false当0计算
+//空值+数值型则为数值型  undefined+数值型则为NaN(not a number)
+//typeof用于检测类型
+
+//转换字符串  【变量.toString()】  【String(变量)】  加号拼接字符串【变量+''】隐式转换
+//转换为数字型  【parseInt(变量)得到的是取整的值，回去掉后面的单位】  【parseFloat(变量)得到的是小数的值，回去掉后面的单位】  【Number(变量)强制转换函数】  利用了算数运算- * /【变量-0】【变量*1】隐式转换
+//转换为布尔型  【Boolean(变量)除了0 NaN null '' undefined为false外  其余是true】
+
+
+//小案例
+// var user=prompt('您的名字是:'),
+// userage=prompt('您的年龄是:')-0,
+// usersex=prompt('您的性别是:');
+// console.log(typeof userage)
+// alert('次网页显示:\n您的名字是:'+user+'\n您的年龄是:'+userage+'\n您的性别是:'+usersex)
+
+//浮点数运算会出错，并且不进行浮点数相等
+//表达式是由数字、运算符、变量等组成的式子 存在返回值
+//自增 ++a 先自增赋值  a++ 先赋值不变后自增【自增自减均为表达式】
+//比较运算符，返回的结果为布尔值   ==存在默认转换类型会把字符串数据转换为数字型   ===全等不存在转换
+//逻辑运算符  && 与(否)  ||或(真)  非！
+//逻辑与中断  A&&B AB均为表达式 A为真则返回B表达式    表达式A为假时返回0
+//逻辑或中断  A||B AB均为表达式 A为真则返回A表达式     表达式A为假时返回B
+//赋值运算符+=等等
+//操作数的个数决定几元运算符 
+//() ++ -- ! */% +- >< == 先&&后|| = .由低运算进行划分
+
+
+//流程控制  顺序、分支if else,switch case break[判断是全等形式]、循环流程for,while,do while控制
+//for循环  初始变量；条件变量；操作表达式 循环体  先一二到四后三在循环二四，第一句只执行一次  双for循环  外行内数  外一次内全部
+//控制台sources断点模式
+//基本用法简单不介绍
+//分支小案例
+// var user=prompt('请输入用户的姓名:');
+// if (user=='刘德华') {
+//     alert('中了5元')
+// } else{
+//     alert('很可惜，没有中奖!')
+// }
+//只会运行匹配的case部分前提break存在
+// var fruit=prompt('请输入需要查询水果的名称:');
+// switch (fruit){
+//     case '苹果':
+//     alert('苹果10元/斤')
+//         break;
+//     case '香蕉':
+//     alert('香蕉10元/斤')
+//          break;
+//      case '梨子':
+//     alert('梨子10元/斤')
+//         break;
+//     default:
+//     alert('其余水果均5元/斤')
+//         break;
+// }
+
+//ATM存款机
+// var sum=100;
+// do{
+// var num = prompt('网页显示:\n1.存钱\n.取钱\n3.显示余额\n4.退出');
+// if (num==1) {
+//     var add = prompt('输入存钱金额:');
+//     sum+=add;
+    
+// } else if(num==2){
+//     var take = prompt('输入取出的金额:');
+//     sum-=take;
+// } else if(num==3){
+//     alert('当前余额为:'+sum);
+// }
+// }while(num!=4);
+
+
+//数组（Array）一组数据的集合  new创建方式  利用数组字面量[],利用逗号隔开【数组元素，索引】正式说法：访问
+//arr[0] 没元素则返回值为undefined  数组的长度  数组名.length
+//若定义长度未定义元素则为undefined 追加/替换数组元素 arr[4]=''或是arr.length=6
+var shuzu1 = new Array();
+var shuzu2 = [];
+//小案例
+//1.数组去重
+// var arr =[2,0,4,5,6,7,8,10,29,0,20,30];
+// var newArr=[];
+// for (var i = 0; i < arr.length; i++) {
+//     if(arr[i]!=0){
+            //元素会自动识别变换无需自增
+//         newArr[newArr.length]=arr[i];
+//     }
+// }
+// console.log(newArr)
+//2.翻转数组
+// var arr =['red','pink','blue','purple'];
+// var newArr=[];
+// for (var i = arr.length - 1; i >= 0; i--) {
+//         newArr[newArr.length]=arr[i];
+// }
+// console.log(newArr)
+//3.冒泡排序sort
+// var arr =[2,0,0,4,5,6,7,8,10,29,20,30];
+// var temp;
+// for (var i = 0; i < arr.length; i++) {
+//     for(var j = i+1; j < arr.length; j++){
+//         if(arr[i]<=arr[j]){
+//             temp=arr[i];
+//             arr[i]=arr[j];
+//             arr[j]=temp;
+//         }
+//     }
+// }
+// console.log(arr)
+
+
+//函数:封装了一段重复使用的代码块 形成一个简单的函数接口
+//声明函数 形参 调用函数 实参  function声明函数的关键字，函数名一般是动词，只有调用才执行
+//实参个数多于形参，会取值   实参小于形参，一个变量未给值即是undefined,变为NaN
+//retrun 需要返回的结果； 返回给调用函数的调用者，相当于赋值getSum()=返回的结果;  简化方式利用赋值
+//return后面的代码不执行且只返回一个值多个值时只返回最后一个    返回多个运算结果可用数组[ sum1 + sum2] 在用遍历取出
+//函数没有return时返回undefined
+// function getSum(num1,num2){
+//     var sum = 0,
+//     for (var i = num1; i < num2; i++) {
+//         sum+=i;
+//         }
+//     console.log(sum)
+// }
+// getSum(22,44);
+
+//arguments  内置对象获取参数，存储传递的所有实参   只有函数才有这个 取值时可以用遍历实现
+//arguments 展现的是伪数组具有.length属性按索引方式存储 没有正真数组的方法pop()push()等等
+// function fn(){
+//     console.log(arguments);
+// console.log(arguments.length);
+// console.log(arguments[i]);
+// }
+// fn(未知);
+//小案例
+// function getMax(){
+//     var max = arguments[0],
+//     for (var i = 0; i < arguments.length; i++) {
+//         if(arguments[i]>max){
+//             max=arguments[i];
+//         }
+//     }
+//     return max;
+// }
+// console.log(getMax(22,44));
