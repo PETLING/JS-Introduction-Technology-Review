@@ -175,6 +175,7 @@ var shuzu2 = [];
 
 
 //函数:封装了一段重复使用的代码块 形成一个简单的函数接口
+//函数之间可以相互调用
 //声明函数 形参 调用函数 实参  function声明函数的关键字，函数名一般是动词，只有调用才执行
 //实参个数多于形参，会取值   实参小于形参，一个变量未给值即是undefined,变为NaN
 //retrun 需要返回的结果； 返回给调用函数的调用者，相当于赋值getSum()=返回的结果;  简化方式利用赋值
@@ -208,3 +209,167 @@ var shuzu2 = [];
 //     return max;
 // }
 // console.log(getMax(22,44));
+
+//利用关键字自定义函数(命名式) functionfn(){}
+//函数表达式(匿名函数)var 变量名 = function(){}
+//js作用域:就是代码名字(变量)在某个范围内起作用和效果
+//全局和局部作用域    函数中局部作用域/函数作用域   script中的全局作用域  同时存在不冲突
+
+//变量的作用域  
+//全局变量【函数内部未声明的变量也是全局变量】  只有浏览器关闭才会销毁，占内存
+//局部变量【函数的形参也是局部变量】  程序结束就销毁，节约
+//es6  js才存在块级作用域  {}
+
+//作用于链   内部函数和外部函数  内部函数访问外部函数的变量，采取的是链式查找方式【就近原则】
+//js引擎 预解析 执行代码  会将var 还有函数提升到当前作用域的最前面后按照代码由上往下执行
+//预解析分为 变量预解析（变量提升）和函数预解析（函数提升）函数代码整体提升
+//实例
+console.log(num);
+var a = b = c = 9;//相当于var a = 9;b = 9;c = 9;
+//集体声明var a = 9,b = 9,c = 9;
+var num=10;    //var num;提升打印后num=10；所以结果为undefined
+
+// fun();
+// var fun =function(){
+//     console.log(22);//变量fun同上
+// }
+
+fu();
+function fu(){
+    console.log(22);//函数整体提升
+}
+
+
+
+//js对象:是一个具体的事物，是一组无序的相关属性和方法的集合
+//属性常用n词，方法常用动词  用匿名函数
+//字面量创建对象{}  里面采取的属性或方法采用键值对的形式  键 属性名  值 属性值
+var obj = {
+    uname:'张三丰',
+    age:18,
+    sex:'男',
+    sayHi:function(){
+        console.log('HI~');
+    }
+};
+var obje = new Object();
+obje.uname = '张三枫';//追加
+//调用方法和属性 对象名.属性名或对象名['属性名'] 对象名.方法名()
+console.log(obj.age);
+console.log(obj['sex']);
+obj.sayHi();
+
+//构造函数  用于封装对象，把相同的属性和方法抽象出来封装到函数里  泛指的某一大类相当于Java的类
+//无需return就可以返回结果
+//调用函数必须用new 函数名()  this.属性名和方法 指向  对象实例化/创建对象的过程
+// function 构造函数名(形参){
+//     this.属性 = 值/形参;
+//     this.方法 = function(){}
+// }
+// new 构造函数名(实参);
+//new关键字的执行过程：
+//1. new构造函数可以在内存中创建一个空的对象
+//2. this就会指向刚才创建的空对象
+//3. 执行构造函数里的代码,给这个新对象添加属性和方法
+//4. 返回这个新对象(无需return)
+//小案例
+function wangzhe(name,type,blood,attack) {
+    this.name = name;
+    this.type = type;
+    this.blood = blood;
+    this.attack = attack;
+}
+
+var ss = new wangzhe('廉颇','力量型','500血量','近战');
+console.log(ss)
+
+//for(变量 in 对象)  遍历对象  输出/变量k返回属性名  输出/对象[k]返回属性值
+
+
+
+//内置对象，自定义对象【前两个属性属于ECMAScript】，浏览器对象【js独有的 js api】
+//内置对象 js提前内置好的方法 例如：Array Date等
+//查文档  MDN/W3C
+//1.Math对象  是一个内置对象，它拥有一些数学常数属性和数学函数方法。Math 不是一个函数对象。Math 不是一个构造器。Math 的所有属性与方法都是静态的。引用圆周率的写法是 Math.PI，调用正余弦函数的写法是 Math.sin(x)，x 是要传入的参数。Math 的常量是使用 JavaScript 中的全精度浮点数来定义的。   Math.abs()绝对值【存在隐式转换】  Math.floor()向下取整  Math.ceil()向上取整  Math.round()四舍五入取整.5往大的取【无论正负】 Math.random() 生成一个随机数【无参数，范围[0,1)】
+//案例
+// function getRandom(min,max){
+//     return Math.floor(Math.random() * (max - min + 1) + min);
+// }
+// console.log(getRandom(1,10))
+//2.Date() 日期对象 创建一个新Date对象的唯一方法是通过new 操作符，例如：let now = new Date(); 若将它作为常规函数调用（即不加 new 操作符），将返回一个字符串，而非 Date 对象。 字符串型（'YYYY-MM-DDTHH mm:ss:ss'）数字型【比实际的月份大一】（YYYY,MM,DDTHH）日期格式化方法 会影响输出形式 getMonth()返回月份小一个月（0到11）首先需要new Date()格式化  距离1970年总毫秒valueof() getTime() 简单些写法+new Date()  无兼容时使用H5新增的总毫秒数Date.now()  时间戳只出现一次的数，总毫秒-当前毫秒
+// d=parseInt(总秒数/60/60/24)//天数
+// h=parseInt(总秒数/60/60%24)//小时
+// m=parseInt(总秒数/60%60)//分数
+// s=parseInt(总秒数%60)//当前秒数
+//计时器小案例
+function countDown(time){
+    var nowTime = +new Date();
+    var inputTime = + new Date(time);
+    var times =(inputTime - nowTime) / 1000;
+    var d=parseInt(times / 60 / 60 / 24);//天数
+    d = d< 10 ? '0' + d : d;
+    var h=parseInt(time / 60 / 60 % 24);//小时
+    h = h< 10 ? '0' + h : h;
+    var m=parseInt(times / 60 % 60);//分数
+    m = m< 10 ? '0' + m : m;
+    var s=parseInt(times % 60);//当前秒数
+    s = s < 10 ? '0' + s : s;
+    return d+ '天' + h + '时' + m + '分' + s + '秒'
+}
+console.log((countDown('2019-5-1 18:00:00')))
+var date = new Date();
+console.log(date)
+//3.数组对象  new Array(3)/数组长度，两个以上的参数则会成为数组元素
+//(1)instanceOf(参数) (2)H5新增效果Array.isArray(参数) 用于检测是否为数组
+//(1)indexOof(参数) 从前往后数组索引 (2)lastIndexOof(参数) 从后往前数组索引
+//(1)toString(参数) (2)join(‘分隔符’) 转换字符串
+//末尾追加数组元素  数组名.push(参数) 返回的结果是数组的长度
+//开头追加数组元素  数组名.unshift(参数) 返回的结果是数组的长度
+//删除数组最后一个元素  数组名.pop() 无参数且返回的结果是数组的删除的元素
+//删除数组第一个元素  数组名.shift() 无参数且返回的结果是数组的删除的元素
+//数组翻转 数组排序  数组名.reserve() 数组名.sort()
+var arrr = [1,23,4,355,65,654];
+arrr.sort(function(a,b){
+    return a-b; //升序
+    return b-a; //降序
+})
+//去重小案例
+function unique(arr){
+    var newArr = [];
+    for (var i = 0; i < arr.length; i++) {
+        //已有元素则去掉
+       if(newArr.indexOf(arr[i]) === -1){
+           newArr.push(arr[i]);
+       }
+    }
+    return newArr;
+}
+var demo = unique(['c','a','b','c','d','a','b',]);
+console.log(demo);
+
+//字符串对象     未查找到就是-1
+//字符串的不可变形 单独会开辟一个空间将新值放入，原先不变加载在新得空间中，占内存会卡死
+//基本包装类型：简单数据类型包装成为了复杂数据类型
+//根据字符串返回位置  indexOf('参数',索引号) 从索引号开始查找【index+1】可持续查找
+//相应位置返回字符 1.chartAt(index) 2.H5新增的str[index] 返回ASCII码 1.chartCodeAt(index)判断用户按的键位
+var str = 'andy';
+//简单类型为什么会有length
+console.log(str.length)
+var temp = new String('andy';)
+//把临时变量的值传给str
+str = temp;
+//在进行销毁临时变量
+temp = null;
+//字符串的拼接 concat('字符串1','字符串2') substr(起始位置star,截取几个length)相当于数组的sclice()
+//替换字符串 replice('被替换的字符','替换的字符') 只会替换第一次出现的字符
+//字符转换为数组 split('分隔符')   相反的功能join('分隔符')
+
+
+
+
+//简单数据类型【基本数据类型或是值类型】和复杂数据类型【引用类型】
+//特殊null是空对象 有对象不知有啥可存为null
+//放入的位置：栈和堆
+
+
+//简单数据类型存入栈中开辟一个地址存入的是值    复杂数据类型存入堆首先在栈中找地址，地址指向堆中的数据
