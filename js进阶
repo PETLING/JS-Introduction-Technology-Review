@@ -1,0 +1,263 @@
+//web Apis阶段W3c组织的基础
+//API应用程序编程接口
+//DOM文档对象模型  文档：一个页面一个文档 元素：页面中的标签 节点：网页中的所有内容  从上往下执行
+//获取页面元素 docunment.getElementByid(id) 返回的是元素对象
+// element【单元素的的子元素，且只存在一个子元素】/document.getElementsByTagName('标签名') 返回的是元素对象的集合，以伪数组的形式存储
+// document.getElementsByClassName(’类名)   返回元素对象
+// document.querySelector(‘选择器)   返回指定选择器的第一个元素对象  All则是所有的值且是集合的形式
+// 返回body HTML元素对象  document.body/html
+
+//DOM事件流：描述页面中接受时间的顺序  冒泡阶段【事件从div到body到html到document】 捕获阶段【事件从document到html到body到div】
+//3个阶段：捕获阶段 当前目标阶段 冒泡阶段      事件阶段：IE最早出   捕获阶段：网景最早出
+//js代码只指定其中一个阶段    onclick和attachEvent(ie)只能得到冒泡阶段
+// addEventListener第三个参数是true则为捕获阶段  注：【触发时间不同】    第三个参数false或是不写则为冒泡阶段
+//有些事件没有冒泡的，比如onblur、onfouse、onmouseenter、onmouseleave
+//传统事件用on  否则去on参数用监听
+
+
+//时间三要素：事件源 事件类型 事件处理程序
+//触发对象 如何触发 什么事件 通过一个函数的方式完成
+// var btn = document.getElementsByid('btn');
+// btn.onclick = function() {
+//     alert('点秋香');
+// }
+
+
+//操作元素 即属性
+//element.innerHTML【识别HTML，可以用标签比如b加粗】 innerText【不识别HTML】
+//小案例：根据时间来变换当前页面的情况
+// var img = document.querySelector('img');
+// var date =new.Date();
+// var h = date.getHours();
+// if (h < 12) {
+//     img.src = '';
+// } else{
+//     img.src = '';
+// }
+//小案例：通过点击使表单值的改变
+// var btn = document.querySelector('button');
+//             var inut =document.querySelector('input');
+//             btn.onclick = function(){
+//                 //表单的值是通过value来修改的
+//                 input.value = '被点击了';
+//                  禁用按钮
+// btn.disabled = true;
+//             }
+//样式属性操作     js修改元素的大小，颜色，位置相当于行内样式但比css权重高一些，采用驼峰式
+//element.style.width/backgroundColor/fontSize/display[none block]
+//onfocus 焦点获取 onblur 失去焦点
+//利用类名样式操作 
+// element.className 写一个css的样式名
+//eg. this.className = 'css原有的类名 css的类名'    会覆盖原有的class类名 想保留可以用多选择器
+
+//排他思想 按钮选项
+//先清除所有元素后设置自己    小技巧：定义一个变量为false可用于变换的值如checked
+//onmouseover onmouseout 两个操作方法相当于hover
+
+
+//自定义属性值的获取 
+//1.element.属性名  【获取的是内置的属性值】 
+//2.element.getAttribute('属性') 【获取我们自己开发的属性值】eg.index='1' index即是自定义的属性     data- 
+//设置元素和属性值  (1)element.属性='值' (2) element.setAttribute('属性','值')
+//eg. div.id ='test' div.className='nav'   element.getAttribute('test','2') element.setAttribute('class','nav')
+// 移除属性值  element.moveAttribute('属性','值')
+//实例小案例  tab栏切换布局 【常用】
+
+
+//节点篇  需要添加事件
+//h5新定义自定义属性   data-index或者用js中的setAttribute()
+//dataset 是一个集合里放了data开头自定义的数据   ie11兼容     dataset['']
+//节点层次获取元素   利用父子关系获取 但兼容性差
+//nodeType(节点类型) nodeName(节点名称) nodeValue(节点值)
+//利用子节点可以通过.parentNode获取最近的父节点
+//不常用 利用父节点可以通过.childNodes获取最近的所有的子节点【包含元素节点 文本节点】   常用.children 可以获取子元素节点
+//firstChild 第一个子节点非子元素节点 firstElementChild第一个子元素节点   IE9以上兼容   常用.children[索引值]  .children[children.length-1] 同上last
+//兄弟节点 nextSibiling 下一个兄弟节点 nextElementSibiling下一个兄弟元素节点 同上previous
+//创建元素节点  document.createElement('')  后面追加元素添加节点 父亲node.appendChild(孩子child)
+//前面加入insetBerore(child ,指定元素ul.children[0])
+//删除节点  ul.removeChild(孩子child)  
+//复制节点 ul.cloneNode() 参数为false或空时，只复制标签不复制内容 true则为深拷贝
+
+
+//动态创建元素  document.write('<></>')  文档流执行完毕后，重绘页面只留下写入的值
+//.creteElement('') 和 .innerHTML=【拼接导致时间长】区别    执行时间的差距
+//加速innerHTML 数组形势下效率更高大于
+// var arr[];
+// for (var i = 0; i < 100; i++) {
+//     arr.push('<a></a>')
+//     }
+//     document.body.innerHTML = arr.join('');
+
+
+// 传统注册事件
+//onclick具有唯一性，会被下一个相同的覆盖        
+// 监听事件addEventListener(type,listener[,useCapture]) 
+// type:事件类型字符串，注意：不要加on eg.click、mouseover  
+//listener:时间处理函数 useCapture可选择参数，是一个参数默认值是false
+//里面的时间类型是字符串，必定加引号，而且不带on 同一个元素同一个事件可以添加多个监听器
+//兼容性问题可以用函数封装解决
+
+//删除事件[解绑事件] 弹一次后不弹出
+//1.传统方式 ul.onclick=null
+//2.监听的方式 removeEventListener(type,listener[,useCapture])
+//写法有要求：注：其中函数fn调用不需要加引号 ul.addEventListener('click',fn) function(){alert(22); ul.removeEventListener('click',fn),false}
+//故可以绑定多个事件
+
+
+//事件对象   存在兼容性问题  ie678用的是window.event
+//1.event[e]就是一个事件对象，写到我们监听函数的，当形参看
+//2.事件对象只有有了事件才会存在，它是由系统自动生成的，无需传递参数
+//3.事件对象是我们事件的一系列相关数据的集合 跟事件相关的 比如鼠标点击里面包含可鼠标的相关信息，鼠标坐标等
+//eg.div.onclick=function(event){console.log(event);}  兼容性问题处理：e=e||window.event;
+//1.e.target 返回的是触发事件的那个对象【ie678用的是e.srcElement     2.this 返回的是绑定的对象
+// 兼容性问题处理：e=e||window.event; var target=e.target||e.srcElement;
+// e.type 返回事件类型  
+
+
+// 阻止默认行为 让链接不跳转或提交按钮不实现 
+// 1.dom标准写法e.preventDefault() 2.ie低版本 e.returnValue; 3.return false;return后面方法不执行
+//组织冒泡  1.e.stopPropagation() 停止传播   2.e.cancelBubble=true；非标准
+//事件委托[事件代理]【代理、委派】 eg.ul中存在多个事件li 交互时间变长
+//不是给子节点单独设置事件监听器，而是事件监听器设置在父节点上，然后利用冒泡原理设置每个子节点上
+
+
+
+//禁止鼠标右键菜单  contextmenu主要控制应该何时显示上下文菜单
+//传统document.oncontextmenu=function(){}
+// document.addEventListener('contextmenu',function(){e.preventDefault();})非传统
+//禁止鼠标选中  selectstart 开始选中【选择的文字内容】
+
+//鼠标事件对象
+//mouseEvent中1. e.clientX 鼠标事件浏览器可视区的距离2. page.clientX页面文档距离【兼容性】3. screen.clientX 电脑屏幕的距离
+//鼠标事件移动：mousemove 页面中移动，给document注册事件 图片绝对定位，将left和right值传给注册对象 单位px别忘
+
+
+//常用键盘事件 传统.onkeyup 监听形式的参数'keyup' 
+//onkeydown【能识别功能键，但不区分大小写】和onkeypress  只有onkeypress【不能识别功能键，但区分大小写】 可以结合keyCode识别按下的键位
+//三个事件的执行顺序down press up 
+
+
+
+
+
+
+
+//BOM  浏览器对象模型，对象是window，独立与内容而与浏览器窗口进行交互 BOM>DOM
+//window顶级对象，js访问浏览器的一个接口 函数变方法，全局变量变为属性【只不过不需要写全名、省略】
+//window.onload【传统注册方式，只写一次，会覆盖】窗口事件加载 'load'【无冲突问题】  代码可以写在任意位置
+//DOMContentLoaded 与上面的区别：load等页面加载完毕，包括dom元素 图片 flash css等才执行 DOMContentLoaded是dom加载完毕执行，不包括
+//窗口大小调整 onresize用于响应式布局  当前屏幕宽度innerWidth 
+//定时器：1.setTimeout(调用函数或函数名，延迟时间【毫秒】)      当时间结束则调用函数
+//页面中存在多个时，用变量命名/赋值一个标识符从而实现多个使用
+//callback回调函数：等待时间结束后调用，广告倒计时自动u=关闭
+//停止定时器:clearTimeout(调用函数或函数名，延迟时间【毫秒】)
+//定时器：2. setInterval(回调调用，延迟时间【毫秒】) 每个时间回调一次
+
+
+// this的指向问题:1.方法调用谁指向的就是谁 2.构造函数中是其实例对象 3.全局作用域和普通函数指向window
+
+
+//js执行机制
+//js是单线程的 如：先添加后删除 导致页面渲染不连贯 
+//所以出现了同步和异步  同步单线程 异步多线程【时间长则先执行其他的】
+//多核CPU计算处理 H5Web Worker标准提出的
+//同步任务：在主线程上执行，形成一个执行栈
+//异步任务：回调函数放入任务队列中，先不执行，待同步任务结束后拿入执行栈中，在执行
+//多个异步任务：看时间和事件处理【事件和事件通过异步进程处理放入队列中】 事件循环：主线不断重复获取任务
+
+//location对象   URL组成：
+//protocal通信协议常用http，ftp，maito   
+//主机【域名】www.index.com  端口 port  路径 path  请求 query【用&隔开】  fragment 片段【#后面内容常见于链接锚点】
+//对象属性：location.href host port pathname search返回参数 hash 返回片段
+//页面传参数据交互
+//location.assign()跳转页面，记录浏览历史，可以后退 .replace()不记录浏览地址，不会退 reload()重新加载页面false或不写则是刷新，true则是强制刷新，页面可按ctrl+F5【从服务器获取数据】而不是在本地缓存值
+
+
+//navigator对象包括有关浏览器的信息，它有很多属性，最长用的是userAgent，该属性可以返回由客户端发送服务器的user-agent头部的值，判断实现各个端的跳转
+//if(navigator.userAgent.match(/(phone|pad|pod|iphone|ipod|ios|ipad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Window phone)/i)) {
+//    window.location.href = 'mobile.example.com';  // 移动端地址
+// }else{
+//    window.location.href = "pc.example.com";  // PC端地址
+// }
+
+//history。forward() .back() go(index/正负两种功能) 网页上的前进 后退功能   OA公办系统
+
+//元素偏移量offset  动态获取有父亲以父亲为主，没有则是body
+//只存在offsetTop和offsetLeft 返回不带单位的数值，只能读【获取位置】
+//style.width 只能获取行内样式的数值，不包含padding和border值，可以读写，需带单位【更改值 】
+//offsetWidth和offsetHeight  返回宽度和高度 包含padding + border + width/height
+//offsetParent 返回带有定位的父亲，否则是body  .parentNode最近以及的父亲无论有没有定位
+//放大镜功能：pageXY offsetTop功能 相减获取盒子的位置 mousemove
+
+//元素可视区client系列
+//client翻译为客户端   可以动态获取元素的边框大小和元素的大下
+//e.clientTop,Left边框  Width,Height不包括边框，包含padding+Width,Height
+
+
+//立即执行函数：不需要调用，立马能够自己执行的函数
+//独立创建一个数据域，所有都是局部变量，名称不会冲突
+//写法 (function(){局部变量})()  或者 (function(a,b){}(a,b));
+//flexible分析：字体会随页面以及客户端变化大小 可以直接拿documentElement dpr物理像素比
+//火狐浏览器存在往返返回缓存 导致页面不会重新刷新原先页面 resize事件 pageshow事件 可以防止 e.persisted判断rem的大小
+
+//元素滚动scroll系列 scroll事件
+//scrollTop  被隐藏部分往上走的部分 ，内容的高度大小
+// scrollWidth  不带边框单位
+
+//三大系列总结
+//offset 常用于获取位置
+//client 常用于获取元素的大小
+//scroll 常用于获取滚动距离
+
+
+//mouseover和mouseenter区别
+//mouseover多次触发，会冒泡父子盒子都会触发
+//mouseenter只触发子盒子
+
+
+//动画函数封装
+//简单淡化封装实例  需要函数定位
+//优化无需开辟空间，回调函数，写个函数当参数
+// var obj={};
+//属性赋值
+// obj.name='andy';
+// clearInterval(obj.timer);
+// function animation(obj,target,参数){
+    //参数 =function(){} 回调参数()
+//     //obj目标对象，target目标位置
+//     var timer =setInterval(function(){
+//         if (obj.offsetLeft >= target) {
+//             //停止动画本质停止定时器
+//             clearInterval(timer);
+//         }
+//         obj.style.left = obj.offsetLeft +1 +'px';
+//     },30);
+// };
+// animation(div,300);
+//缓慢动画 (目标值-现在的位置)/10
+
+//动画函数单独封装到js文件中
+//js引入就可以实现了
+//图片克隆事件 var first=e.children[0]cloneNode(true);ul.appendChild(first);
+//手动点击事件.click()  会每隔几秒自动点击
+//节流阀：上一个函数动画内容执行完毕，再去执行下一个函数动画，让事件无法连续触发
+//设置一个变量 flag=true if(flag){flag=false;do something;}  或callback&&callback();
+//window.scroll(a,b);直接定位 无需参数
+
+
+
+
+// 本地存储之sessionStorage    
+// 后缀.setItem('key',value) 存储数据库中
+//.getItem(key) 获取数据
+//.removeItem(key) 删除数据
+//.clear 清除所有数据
+
+// 本地存储之.localStorage
+//window.localStorage
+//生命周期永久生效，除非手动的删除，否则关闭页面也会存在
+//可以多窗口(页面) 共享同一浏览器也可以共享，以键值对的形式存储使用
+// 后缀.setItem('key',value) 存储数据库中
+//.getItem(key) 获取数据
+//.removeItem(key) 删除数据
+//.clear 清除所有数据
