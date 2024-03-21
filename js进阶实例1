@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .box {
+                position: relative;
+                width: 400px;
+                border-bottom: 1px solid #aa00ff;
+                margin: 100px auto;
+            }
+
+            .box input {
+                width: 370px;
+                height: 30px;
+                border: 0px;
+                outline: none;
+            }
+
+            .box img {
+                width: 24px;
+                height: 24px;
+                position: absolute;
+                left: 376px;
+            }
+
+            .tbox {
+                width: 250px;
+                margin: 100px auto;
+                margin-right: 0px;
+            }
+
+            .tbox li {
+                float: left;
+                width: 24px;
+                background-color: pink;
+                margin: 15px;
+                /* background: url(images/睁眼.png) no-repeat; */
+            }
+           .tab{
+               width: 100%;
+           }
+            .btn{
+                background-color: chartreuse;
+                color: black;
+            }
+          .item{
+              display: none;
+          }
+          .tab_list li{
+              float: left;
+              height: 39px;
+              width: 200px;
+              line-height: 39px;
+              padding: 0 20px;
+              text-align: center;
+              cursor: pointer;
+          }
+          .tab_con .item{
+            width: 400px;
+            position: relative;
+            left: 40px;
+          }
+          .current{
+              background-color: red;
+              color: white;
+          }
+          .item_info{
+              padding: 20px 0 0 20px;
+          }
+          
+        </style>
+
+    </head>
+    <body>
+        <!-- 小案例：根据时间来变换当前页面的情况 -->
+        <img src="https://pic.rmb.bdstatic.com/bjh/914b8c0f9814b14c5fedeec7ec6615df5813.jpeg" alt="" />
+        <script>
+            var img = document.querySelector('img');
+            var date = new Date();
+            var h = date.getHours();
+            // console.log(date)
+            // console.log(img)
+            //注意：是由上到下实现的，倘若放上面则会报错无法获得选择器的数据，变为空值
+            // if (h < 12) {
+            //     console.log(h)
+            //     img.src = 'https://imgcdn.ccmapp.cn/3/860x/group1/M00/16/64/rApntl7CSUaAKubvAAzTDWolGgc704.jpg';
+            // } else if(h < 14){
+            //     img.src = 'https://imgcdn.ccmapp.cn/3/860x/group1/M00/16/64/rApntV7CSamAf0oFACoQ01lxZ84991.jpg';
+            // } else{
+            //     img.src = 'https://imgcdn.ccmapp.cn/3/860x/group1/M00/16/64/rApntl7CSWiAFHiVAAvfoQYfxx8188.jpg';
+            // }
+        </script>
+        <br />
+
+        <!-- 小案例：通过点击使表单值的改变 -->
+        <button>按钮</button>
+        <input type="text" value="输入内容" />
+        <script>
+            var btn = document.querySelector('button');
+            var input = document.querySelector('input');
+            btn.onclick = function() {
+                //表单的值是通过value来修改的
+                input.value = '被点击了';
+                //禁用按钮
+                // btn.disabled = true;
+                //this指向的是调用者
+                this.disabled = true;
+            }
+        </script>
+        <br />
+
+        <!--表单小案例 onfocus 焦点获取 onblur 失去焦点 -->
+        <div class="box">
+            <label for="">
+                <img src="./闭眼睛.png" alt="" id="eye" />
+            </label>
+            <input type="password" class="pwd" />
+        </div>
+        <script>
+            //两种获取的方式
+            var eye = document.getElementById('eye');
+            var pwd = document.querySelector('.pwd');
+            var flag = 0;
+            eye.onclick = function() {
+                if (flag == 0) {
+                    pwd.type = 'text';
+                    flag = 1;
+                    eye.src = './睁眼.png/';
+                } else {
+                    pwd.type = 'password';
+                    flag = 0;
+                    eye.src = './闭眼睛.png';
+                }
+            }
+        </script>
+        
+        <!-- 九宫格，模仿的是淘宝的精灵图计算好的是44px -->
+        <div class="tbox">
+            <ul type="circle">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <script>
+            var tbox = document.querySelectorAll('li');
+            for (var i = 0; i < tbox.length; i++) {
+                var index = i * 44;
+                // tbox[i].style.backgroundPosition = '0 -' + index +'px';
+            }
+        </script>
+        <div class="on">
+        <input type="text" value="手机" style="margin: 20px;" id="on">
+        </div>
+        <script>
+            var text = document.getElementById('on');
+            text.onfocus = function() {
+                // console.log('11')
+                if (this.value === '手机') {
+                    this.value = '';
+                }
+                this.style.color = '#333';
+            }
+            text.onblur = function() {
+                if (this.value === '') {
+                    this.value = '手机';
+                }
+                this.style.color = '#999';
+            }
+        </script>
+        <!-- 小案例 换项选取 -->
+        <br />
+        <button>按钮1</button>
+        <button>按钮2</button>
+        <button>按钮3</button>
+        <button>按钮4</button>
+        <button>按钮5</button>
+        <script>
+            var btns = document.getElementsByTagName('button');
+            //选项卡的写法
+            //全选全不选
+            //可以额外写一个onclick事件绑定在总设置按钮身上，复选框的话用checked作为判断条件
+            // for (var i = 0; i < btns.length; i++) {
+            //     btns[i].onclick = function (){
+            //         // this.style.backgroundColor ='pink';
+            //         //正反选
+            //         if (!this.className ) {
+            //             this.className ='btn';
+            //         } else{
+            //             this.className ='';
+            //         }
+            //     } 
+            // }
+            //单选项的写法
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].onclick = function (){
+                    //先将所有的背景色去除
+                    for (var i = 0; i < btns.length; i++) {
+                        btns[i].style.backgroundColor ='';
+                    }
+                    //当前选中的按钮背景色填充
+                        this.style.backgroundColor ='pink';
+                    }
+                }
+        </script>
+         <!-- tab栏切换 -->
+         <div class="tab">
+             <div class="tab_list">
+                 <ul>
+                     <li class="current">商品介绍</li>
+                     <li>规格与包装</li>
+                     <li>售后保障</li>
+                     <li>商品评价</li>
+                     <li>手机社区</li>
+                 </ul>
+             </div>
+             <div class="tab_con">
+                 <div class="item" style="display: block;">商品介绍模块内容</div>
+                 <div class="item">规格与包装模块内容</div>
+                 <div class="item">售后保障模块内容</div>
+                 <div class="item">商品评价（5000）模块内容</div>
+                 <div class="item">手机社区模块内容</div>
+             </div>
+         </div>
+         <script>
+             var tab_list = document.querySelector('.tab_list');
+             var lis = tab_list.querySelectorAll('li');
+             var items = document.querySelector('.tab_con').querySelectorAll('.item');
+             for (var i = 0; i < lis.length; i++) {
+                 //自定义属性
+                 lis[i].setAttribute('index',i);
+                 lis[i].onclick = function(){
+                     for (var i = 0; i < lis.length; i++) {
+                         lis[i].className='';
+                     }
+                     this.className='current';
+                     var index = this.getAttribute('index');
+                     for (var j = 0; j < items.length; j++) {
+                         items[j].style.display = 'none';
+                     }
+                     items[index].style.display = 'block';
+                 }
+             }
+         </script>
+ 
+    </body>
+</html>
