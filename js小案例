@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            input{
+                border: 1px solid pink;
+                color: #999;
+                text-align: center;
+            }
+            .inputchange{
+                border: 1px solid greenyellow;
+                color: #111;
+                text-align: left;
+            }
+            .side{
+                position: relative;
+                background-color: aliceblue;
+                width: 60px;
+                height: 200px;
+            }
+            .side img{
+                position: absolute;
+                left: 15px;
+                bottom: 0px;
+                width: 30px;
+            }
+            
+            li{
+                position: relative;
+                background-color: azure;
+                width: 200px;
+                height: 30px;
+                line-height: 30px;
+                margin: 5px;
+            }
+            a{
+                cursor: pointer;
+                /* position: absolute;
+                right: 0px; */
+            }
+            table{
+                width: 500px;
+                margin: 100px auto;
+                border-collapse: collapse;
+                text-align: center;
+            }
+            td,th{
+                border: 1px solid #333;
+            }
+            thead tr {
+                height: 40px;
+                background-color: #ccc;
+            }
+            .ek{
+                position: absolute;
+                top:2px;
+            }
+            
+            .banner{
+                background-color: purple;
+                height: 200px;
+                width: 900px;
+                line-height: 200px;
+                text-align: center;
+                margin-top: 20px;
+            }
+             .header{
+                 background-color: salmon;
+                 height: 400px;
+                 width: 900px;
+                 line-height: 400px;
+                 text-align: center;
+                 align-content: center;
+             } 
+             .main{
+                 background-color: peachpuff;
+                 height: 500px;
+                 width: 900px;
+                 line-height: 500px;
+                 text-align: center;
+                 align-content: center;
+                 margin-top: 20px;
+             }
+             .slider-bar{
+                 width: 40px;
+                 height: 100px;
+                 background-color: aqua;
+                 position: absolute;
+                 left: 908px;
+                 top: 1197px;
+             }
+             span{
+                 display: none;
+                 position: absolute;
+                 bottom: 0px;
+             }
+        </style>
+    </head>
+    <body>
+        <!-- 作业一  密码框 -->
+        <div>
+            <input type="text" value="邮箱/ID/手机号" class="put1"/>
+            <input type="text" value="密码" class="put2"/>
+            <button>登陆</button>
+        </div>
+        <script>
+            var put1 = document.querySelector('.put1');
+            var put2 = document.querySelector('.put2');
+            
+            put1.onfocus = function (){
+                if(this.value === '邮箱/ID/手机号'){
+                    this.value = '';
+                    // console.log(this.className)
+                    this.className = 'put1 inputchange';
+                    // console.log(this.className)
+                }
+            }
+            put1.onblur = function (){
+                if(this.value === ''){
+                    this.value = '邮箱/ID/手机号';
+                    this.className = 'put1';
+                }
+            }
+            
+            put2.onfocus = function (){
+                if(this.value === '密码'){
+                    this.value = '';
+                    // console.log(this.className)
+                    this.className = 'put2 inputchange';
+                    // console.log(this.className)
+                }
+            }
+            put2.onblur = function (){
+                if(this.value === ''){
+                    this.value = '密码';
+                    this.className = 'put2';
+                }
+            }
+        </script>
+        
+        <!--案例二 隐藏广告 -->
+        <div class="side">
+            <img src="./删除.png" alt="" class="eye"/>
+        </div>
+        <script>
+            var eye = document.querySelector('.eye');
+            var diyi = document.querySelector('.side');
+            eye.onclick = function (){
+                diyi.style.display = 'none';
+            }
+        </script>
+        
+        <!-- 小案例 增删改查发布 -->
+        <textarea name="123" id="" cols="30" rows="10"></textarea>
+        <button class="button">发布</button>
+        <ul>
+            <!-- <li>11</li> -->
+        </ul>
+        <script>
+            var text = document.querySelector('textarea');
+            var ul = document.querySelector('ul');
+            var btn = document.querySelector('.button');
+            // console.log(btn)
+            btn.onclick = function() {
+                //创建元素
+                var li = document.createElement('li');
+                //后追加添加元素
+                // ul.appendChild(lili);
+                //前插入
+                ul.insertBefore(li,ul.children[0]);
+                li.innerHTML = text.value + "<a herf='iavascript:;'>删除</a>";
+                var as = document.querySelectorAll('a');
+                for (var i = 0; i < as.length; i++) {
+                    as[i].onclick = function(){
+                        ul.removeChild(this.parentNode);
+                    }
+                }
+            }
+            </script>
+            
+            <!-- 动态生成表格  根据数据的多少变化 -->
+            <table cellspacing='0'>
+                <tbody>
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>科目</th>
+                            <th>成绩</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                </tbody>
+            </table>
+            <script>
+                var data = [{
+                    name:'大大的',
+                    subject:'JavaScript',
+                    score:100,
+                },{
+                    name:'多少的',
+                    subject:'JavaScript',
+                    score:10,
+                },{
+                    name:'多少的',
+                    subject:'JavaScript',
+                    score:10,
+                },{
+                    name:'发发的',
+                    subject:'JavaScript',
+                    score:60,
+                },{
+                    name:'来说的',
+                    subject:'JavaScript',
+                    score:90,
+                },{
+                    name:'来说的',
+                    subject:'JavaScript',
+                    score:90,
+                }];
+                var tbody = document.querySelector('tbody');
+                //创建与数据有关的单元格
+                for (var i = 0; i < data.length; i++) {
+                    var tr = document.createElement('tr');
+                    tbody.appendChild(tr);
+                    for (var k in data[i]) {
+                    var td = document.createElement('td');
+                    tr.appendChild(td);
+                    td.innerHTML = data[i][k];
+                    }
+                    //创建新的单元格
+                    var td = document.createElement('td');
+                    tr.appendChild(td);
+                    td.innerHTML = "<a herf='iavascript:;'>删除</a>";
+                    var as = document.querySelectorAll('a');
+                    for (var i = 0; i < as.length; i++) {
+                        as[i].onclick = function(){
+                            tbody.removeChild(this.parentNode.parentNode);
+                        }
+                    }
+                }
+            </script>
+            
+            <!-- 事件监听 -->
+            <button class="btn1">shijian1</button>
+            <button class="btn2">shijian2</button>
+            <button class="btn3">shijian3</button>
+            <script>
+                var btn1 =document.querySelector('.btn1');
+                var btn2 =document.querySelector('.btn2');
+                var btn3 =document.querySelector('.btn3');
+                btn1.onclick = function(){
+                    alert(22)
+                };
+                btn3.addEventListener('click',function(){
+                    alert(44)
+                });
+                //兼容问题，不常用,且会影响后面代码
+                // btn2.attachEvent('onclick',function(){
+                //     alert(33)
+                // });
+            </script>
+            
+            <!-- 鼠标追踪 -->
+            <img src="./睁眼.png" alt="" class="ek"/>
+            <script>
+                var ek = document.querySelector('.ek');
+                document.addEventListener('mousemove',function(e){
+                    var x = e.pageX;
+                    var y = e.pageY;
+                    //调准位置
+                    ek.style.left= x - 30 + 'px';
+                    ek.style.top= y - 30 + 'px';
+                })
+            </script>
+            
+            <!-- 小案例：京东搜索框 -->
+            <!-- 按s会自动锁定搜索框 -->
+            <input type="text" name="" class="in">
+            <script>
+                var ink =document.querySelector('.in');
+                document.addEventListener('keyup',function(e){
+                    console.log(e.keyCode);
+                    if(e.keyCode === 83){
+                        ink.focus();
+                    }
+                })
+            </script>
+            
+            <!-- 小案例定时器 倒计时 -->
+            <div>
+                <span class="hour">1</span>
+                <span class="minute">2</span>
+                <span class="second">3</span>
+            </div>
+            <script>
+                var hour =document.querySelector('.hour')
+                var minute =document.querySelector('.minute')
+                var second =document.querySelector('.second')
+                var inputTime = + new Date('2019-5-1 18:00:00');
+                countDown();
+                setInterval(countDown,1000);
+                function countDown(time){
+                    var nowTime = +new Date();
+                    var times =(inputTime - nowTime) / 1000;
+                    // var d=parseInt(times / 60 / 60 / 24);//天数
+                    // d = d< 10 ? '0' + d : d;
+                    var h=parseInt(time / 60 / 60 % 24);//小时
+                    h = h< 10 ? '0' + h : h;
+                    hour.innerHTML = h;
+                    var m=parseInt(times / 60 % 60);//分数
+                    m = m< 10 ? '0' + m : m;
+                    minute.innerHTML = m;
+                    var s=parseInt(times % 60);//当前秒数
+                    s = s < 10 ? '0' + s : s;
+                    second.innerHTML = s;
+                    return  h + '时' + m + '分' + s + '秒'
+                }
+            </script>
+            
+            <!-- 小案例 放大镜功能 待完成-->
+            <!-- 1.两个图片和一个遮挡层，一个原先一个放大图片，遮挡层运动和放大图片两个同时获取位置移动 -->
+            
+            
+            <!-- 小案例  固定右边侧栏 -->
+            <div class="slider-bar">
+                <span class="goBack">返回部分</span>
+            </div>
+                <div class="header">头部区域</div>
+                <div class="banner">banner区域</div>
+                <div class="main">主题区域</div>
+                <script>
+                    //需要声明 DTD 开头的东西
+                    var aside = document.querySelector('.goBack');
+                    var slider = document.querySelector('.slider-bar');
+                    var banner = document.querySelector('.banner');
+                    //同上操作  显示span模块
+                    var main = document.querySelector('.main');
+                    var goback = document.querySelector('.goBack');
+                    // 一定写在外面
+                    var bannerTop = banner.offsetTop;
+                    var sliderTop = slider.offsetTop - bannerTop;
+                    var mainTop = main.offsetTop;
+                    
+                    document.addEventListener('scroll',function(){
+                        // console.log(window.pageYOffset);
+                        if (window.pageYOffset >= bannerTop) {
+                            slider.style.position = 'fixed';
+                            slider.style.top = sliderTop +'px';
+                        } else{
+                            slider.style.position = 'absolute';
+                            slider.style.top ='1197px';
+                        }
+                        if (window.pageYOffset >= mainTop) {
+                            goback.style.display = 'block';
+                        } else{
+                            goback.style.display = 'none';
+                        }
+                    })
+                    document.addEventListener('click',function(){
+                        //无动画
+                        window.scroll(0,0);
+                        //可以用动画去封装写入
+                    })
+                </script>
+    </body>
+</html>
